@@ -1,0 +1,159 @@
+{
+	"bsonType": "object",
+	"description": "用户信息表",
+	"required": ["appid", "openid", "createTime", "status", "role"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true,
+		"count": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"foreignKey": "db-app.appid"
+		},
+		"username": {
+			"title": "用户名",
+			"bsonType": "string",
+			"trim": "both",
+			"maxLength": 15,
+			"minLength": 4
+		},
+		"password": {
+			"title": "密码",
+			"bsonType": "string",
+			"trim": "both",
+			"maxLength": 32,
+			"minLength": 6
+
+		},
+		"openid": {
+			"bsonType": "string"
+		},
+		"nickName": {
+			"title": "昵称",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"avatarUrl": {
+			"title": "头像",
+			"bsonType": "string",
+			"trim": "both",
+			"format": "url"
+		},
+		"gender": {
+			"title": "性别",
+			"description": "性别",
+			"bsonType": "int",
+			"enum": [{
+					"text": "保密",
+					"value": 0
+				},
+				{
+					"text": "男",
+					"value": 1
+				},
+				{
+					"text": "女",
+					"value": 2
+				}
+			],
+			"defaultValue": 0
+		},
+		"country": {
+			"title": "国家",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"province": {
+			"title": "省份",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"city": {
+			"title": "城市",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"language": {
+			"title": "语言",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"email": {
+			"title": "邮箱",
+			"bsonType": "string",
+			"trim": "both",
+			"format": "email",
+			"errorMessage": "邮箱格式错误"
+		},
+		"mobile": {
+			"title": "电话号码",
+			"bsonType": "string",
+			// "pattern": "^1[3-9]\\d{9}$"
+		},
+		"birthday": {
+			"title": "出生日期",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_login_time": {
+			"title": "最后登录时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"create_time": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"status": {
+			"title": "账号状态",
+			"bsonType": "int",
+			"description": "账号状态：0-禁用 1-正常",
+			"enum": [{
+					"text": "禁用",
+					"value": 0
+				},
+				{
+					"text": "正常",
+					"value": 1
+				}
+			],
+			"defaultValue": 1
+		},
+		"role": {
+			"title": "用户角色",
+			"bsonType": "string",
+			"description": "用户角色：admin-管理员 user-普通用户",
+			"enum": [{
+					"text": "管理员",
+					"value": "admin"
+				},
+				{
+					"text": "普通用户",
+					"value": "user"
+				}
+			],
+			"defaultValue": "user"
+		},
+		"remark": {
+			"title": "备注",
+			"bsonType": "string",
+			"description": "用户备注信息",
+			"trim": "both",
+			"maxLength": 200
+		}
+	}
+}

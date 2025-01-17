@@ -1,0 +1,7 @@
+{
+  "name": "admin-login",
+  "dependencies": {
+    "uni-crypto": "file:../common/uni-crypto"
+  },
+  "extensions": {}
+}

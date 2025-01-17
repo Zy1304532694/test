@@ -1,0 +1,9 @@
+{
+  "name": "admin-users",
+  "dependencies": {
+    "uni-crypto": "file:../common/uni-crypto"
+  },
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

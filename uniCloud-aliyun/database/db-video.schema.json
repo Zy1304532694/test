@@ -1,0 +1,82 @@
+{
+	"bsonType": "object",
+	"description": "视频信息表",
+	"required": ["title", "description", "video_url", "thumbnail_url"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true,
+		"count": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"thumbnail_url": {
+			"title": "缩略图URL",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"video_url": {
+			"title": "视频URL",
+			"bsonType": "string",
+			"trim": "both",
+			"required": true
+		},
+		"title": {
+			"title": "标题",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"description": {
+			"title": "描述",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"category_id": {
+			"title": "分类ID",
+			"bsonType": "int"
+		},
+		"tags": {
+			"title": "标签",
+			"bsonType": "array",
+			"items": {
+				"bsonType": "string",
+				"trim": "both"
+			}
+		},
+		"view_count": {
+			"title": "浏览量",
+			"bsonType": "int",
+			"defaultValue": 0
+		},
+		"like_count": {
+			"title": "点赞数",
+			"bsonType": "int",
+			"defaultValue": 0
+		},
+		"download_count": {
+			"title": "下载次数",
+			"bsonType": "int",
+			"defaultValue": 0
+		},
+		"user_id": {
+			"title": "创作者ID",
+			"bsonType": "string"
+		},
+		"create_time": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"deleted": {
+			"title": "逻辑删除",
+			"bsonType": "int",
+			"description": "逻辑删除,1：删除；0：未删除",
+			"defaultValue": 0
+		}
+	}
+}

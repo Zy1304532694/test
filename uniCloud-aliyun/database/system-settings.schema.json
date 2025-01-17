@@ -1,0 +1,62 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"site_name": {
+			"bsonType": "string",
+			"title": "站点名称",
+			"description": "网站名称",
+			"trim": "both"
+		},
+		"site_logo": {
+			"bsonType": "string",
+			"title": "站点LOGO",
+			"description": "网站LOGO图片地址",
+			"trim": "both"
+		},
+		"site_desc": {
+			"bsonType": "string",
+			"title": "站点描述",
+			"description": "网站描述",
+			"trim": "both"
+		},
+		"contact_email": {
+			"bsonType": "string",
+			"title": "联系邮箱",
+			"description": "联系邮箱",
+			"format": "email",
+			"trim": "both"
+		},
+		"contact_phone": {
+			"bsonType": "string",
+			"title": "联系电话",
+			"description": "联系电话",
+			"trim": "both"
+		},
+		"icp_code": {
+			"bsonType": "string",
+			"title": "ICP备案号",
+			"description": "ICP备案号",
+			"trim": "both"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"title": "更新时间",
+			"description": "更新时间"
+		},
+		"update_by": {
+			"bsonType": "string",
+			"title": "更新人",
+			"description": "更新人ID"
+		}
+	}
+} 

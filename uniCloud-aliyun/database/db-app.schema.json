@@ -1,0 +1,77 @@
+{
+	"bsonType": "object",
+	"required": ["code", "appid", "app_name", "app_status", "interstitialId", "rewardedVideoId", "ad_status"],
+	"permission": {
+		"read": true,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string"
+		},
+		"secret": {
+			"bsonType": "string"
+		},
+		"app_name": {
+			"bsonType": "string",
+			"description": "小程序名称"
+		},
+		"app_status": {
+			"bsonType": "int",
+			"description": "小程序状态：0-禁用 1-正常",
+			"enum": [{
+					"text": "禁用",
+					"value": 0
+				},
+				{
+					"text": "正常",
+					"value": 1
+				}
+			],
+			"defaultValue": 1
+		},
+		"interstitialId": {
+			"bsonType": "string",
+			"description": "插屏广告"
+		},
+		"rewardedVideoId": {
+			"bsonType": "string",
+			"description": "激励视频广告"
+		},
+		"ad_status": {
+			"bsonType": "int",
+			"description": "广告开启状态：0-禁用 1-正常",
+			"enum": [{
+					"text": "禁用",
+					"value": 0
+				},
+				{
+					"text": "正常",
+					"value": 1
+				}
+			],
+			"defaultValue": 1
+		},
+		"code": {
+			"bsonType": "string",
+			"description": "编号"
+		},
+		"create_time": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"deleted": {
+			"title": "逻辑删除",
+			"bsonType": "int",
+			"description": "逻辑删除,1：删除；0：未删除"
+		}
+	}
+}

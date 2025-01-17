@@ -1,0 +1,7 @@
+{
+  "name": "uni-crypto",
+  "version": "1.0.0",
+  "description": "密码加密模块",
+  "main": "index.js",
+  "dependencies": {}
+} 
