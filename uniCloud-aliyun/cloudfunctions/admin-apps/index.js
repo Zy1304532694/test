@@ -132,6 +132,19 @@ exports.main = async (event, context) => {
 				data: deleteResult
 			}
 			
+		case 'updateAdStatus':
+			const adStatusResult = await collection.doc(id).update({
+				ad_status: event.ad_status,
+				update_time: Date.now(),
+				update_by: userInfo.data[0]._id
+			})
+			
+			return {
+				code: 0,
+				msg: '操作成功',
+				data: adStatusResult
+			}
+			
 		default:
 			return {
 				code: -1,

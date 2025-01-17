@@ -39,7 +39,8 @@
 						</uni-td>
 						<uni-td align="center">
 							<uni-tag :text="item.ad_status === 1 ? '开启' : '关闭'"
-								:type="item.ad_status === 1 ? 'success' : 'warning'" size="small" />
+								:type="item.ad_status === 1 ? 'success' : 'warning'" size="small"
+								@click="handleToggleAdStatus(item)" class="clickable-tag" />
 						</uni-td>
 						<uni-td align="center">{{ formatDate(item.create_time) }}</uni-td>
 						<uni-td align="center">
@@ -330,6 +331,46 @@
 				if (!timestamp) return '-'
 				const date = new Date(timestamp)
 				return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+			},
+
+			// 切换广告状态
+			async handleToggleAdStatus(item) {
+				try {
+					uni.showModal({
+						title: '提示',
+						content: `确定要${item.ad_status === 1 ? '关闭' : '开启'}广告吗？`,
+						success: async (res) => {
+							if (res.confirm) {
+								const result = await uniCloud.callFunction({
+									name: 'admin-apps',
+									data: {
+										action: 'updateAdStatus',
+										id: item._id,
+										ad_status: item.ad_status === 1 ? 0 : 1,
+										token: uni.getStorageSync('token')
+									}
+								})
+								
+								if (result.result.code === 0) {
+									uni.showToast({
+										title: '操作成功'
+									})
+									this.loadData()
+								} else {
+									uni.showToast({
+										title: result.result.msg || '操作失败',
+										icon: 'none'
+									})
+								}
+							}
+						}
+					})
+				} catch (e) {
+					uni.showToast({
+						title: '操作失败',
+						icon: 'none'
+					})
+				}
 			}
 		}
 	}
@@ -472,6 +513,19 @@
 				margin-top: 20px;
 				display: flex;
 				justify-content: flex-end;
+			}
+		}
+
+		.clickable-tag {
+			cursor: pointer;
+			transition: all 0.3s;
+			
+			&:hover {
+				transform: scale(1.05);
+			}
+			
+			&:active {
+				transform: scale(0.95);
 			}
 		}
 	}

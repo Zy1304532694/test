@@ -45,17 +45,19 @@
 		},
 		"ad_status": {
 			"bsonType": "int",
-			"description": "广告开启状态：0-禁用 1-正常",
-			"enum": [{
-					"text": "禁用",
+			"title": "广告状态",
+			"description": "广告状态：0-关闭 1-开启",
+			"enum": [
+				{
+					"text": "关闭",
 					"value": 0
 				},
 				{
-					"text": "正常",
+					"text": "开启",
 					"value": 1
 				}
 			],
-			"defaultValue": 1
+			"defaultValue": 0
 		},
 		"code": {
 			"bsonType": "string",
