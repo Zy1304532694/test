@@ -33,7 +33,12 @@
 									:auto-upload="true"
 									limit="1"
 									mode="grid"
+									:del-icon="true"
 									:image-styles="imageStyles"
+									@delete="handleDeleteLogo"
+									@select="selectFile"
+									@success="uploadSuccess"
+									@fail="uploadFail"
 								/>
 								<view class="upload-tips">建议上传比例1:1的PNG格式图片</view>
 							</view>
@@ -154,16 +159,20 @@
 						}
 					})
 					if (res.result.code === 0 && res.result.data) {
-						// 处理 site_logo 数据格式
 						const data = res.result.data
-						if (data.site_logo) {
-							data.site_logo = [{
-								url: data.site_logo,
+						// 处理 site_logo 数据格式
+						const formData = { ...data }
+						if (formData.site_logo) {
+							formData.site_logo = {
+								url: formData.site_logo,
 								name: 'logo',
-								extname: data.site_logo.split('.').pop() || 'png'
-							}]
+								extname: formData.site_logo.split('.').pop() || 'png',
+								type: 'image'
+							}
+						} else {
+							formData.site_logo = null
 						}
-						this.formData = data
+						this.formData = formData
 					} else if (res.result.code === 401) {
 						// token过期，跳转登录页
 						uni.showToast({
@@ -188,11 +197,19 @@
 			handleSubmit() {
 				this.$refs.form.validate().then(async res => {
 					try {
+						const submitData = { ...this.formData }
+						// 处理 logo 数据
+						if (submitData.site_logo?.url) {
+							submitData.site_logo = submitData.site_logo.url
+						} else {
+							submitData.site_logo = ''
+						}
+
 						const result = await uniCloud.callFunction({
 							name: 'admin-settings',
 							data: {
 								action: 'save',
-								data: this.formData,
+								data: submitData,
 								token: uni.getStorageSync('token')
 							}
 						})
@@ -229,9 +246,16 @@
 				})
 			},
 			
+			// 删除 LOGO
+			handleDeleteLogo() {
+				this.formData.site_logo = null
+			},
+			
 			// 文件选择
 			selectFile(e) {
 				console.log('选择文件：', e)
+				// 清除旧的 logo，以便重新上传
+				this.formData.site_logo = null
 			},
 			
 			// 上传进度
@@ -241,13 +265,16 @@
 			
 			// 上传成功
 			uploadSuccess(e) {
-				console.log('上传成功：', e.tempFiles[0])
-				// 保存文件对象信息
+				console.log('上传成功：', e)
+				const file = e.tempFiles[0]
 				this.formData.site_logo = {
-					name: e.tempFiles[0].name,
-					extname: e.tempFiles[0].extname,
-					url: e.tempFiles[0].url
+					url: file.url,
+					name: file.name,
+					extname: file.extname,
+					type: 'image'
 				}
+				// 触发全局事件，通知其他组件更新设置
+				uni.$emit('settingsUpdated')
 			},
 			
 			// 上传失败
@@ -257,6 +284,7 @@
 					title: '图片上传失败',
 					icon: 'none'
 				})
+				this.formData.site_logo = null
 			}
 		}
 	}
@@ -360,6 +388,26 @@
 				&:active {
 					transform: translateY(0);
 				}
+			}
+		}
+		
+		.upload-box {
+			:deep(.uni-file-picker__container) {
+				.is-add {
+					border: 1px dashed #dcdfe6;
+					transition: all 0.2s;
+					
+					&:hover {
+						border-color: #409eff;
+						background-color: #f5f7fa;
+					}
+				}
+			}
+			
+			.upload-tips {
+				margin-top: 8px;
+				color: #909399;
+				font-size: 12px;
 			}
 		}
 	}

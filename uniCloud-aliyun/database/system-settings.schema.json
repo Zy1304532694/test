@@ -21,7 +21,8 @@
 			"bsonType": "string",
 			"title": "站点LOGO",
 			"description": "网站LOGO图片地址",
-			"trim": "both"
+			"trim": "both",
+			"defaultValue": ""
 		},
 		"site_desc": {
 			"bsonType": "string",

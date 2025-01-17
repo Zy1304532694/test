@@ -41,9 +41,7 @@ exports.main = async (event, context) => {
 			
 			// 处理 site_logo 字段
 			let processedData = { ...submitData }
-			if (typeof submitData.site_logo === 'object' && submitData.site_logo !== null) {
-				processedData.site_logo = submitData.site_logo.url || ''
-			} else if (!submitData.site_logo) {
+			if (!submitData.site_logo) {
 				processedData.site_logo = ''
 			}
 			
